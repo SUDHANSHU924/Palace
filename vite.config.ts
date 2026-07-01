@@ -6,30 +6,21 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const port = Number(process.env.PORT ?? 5173);
-const basePath = process.env.BASE_PATH ?? "/";
-
 export default defineConfig({
-  base: basePath,
+  base: "/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
-      "@assets": path.resolve(__dirname, "attached_assets"),
     },
     dedupe: ["react", "react-dom"],
   },
-  root: __dirname,
-  build: {
-    outDir: path.resolve(__dirname, "dist"),
-    emptyOutDir: true,
-  },
   server: {
-    port,
+    port: 5173,
     host: "0.0.0.0",
   },
   preview: {
-    port,
+    port: 5173,
     host: "0.0.0.0",
   },
 });

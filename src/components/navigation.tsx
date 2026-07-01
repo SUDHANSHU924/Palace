@@ -31,7 +31,7 @@ export function Navigation() {
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="font-serif text-2xl font-bold tracking-widest text-primary">
-          WARGO
+          Restaurant
         </Link>
         <nav className="hidden md:flex items-center gap-8">
           {[

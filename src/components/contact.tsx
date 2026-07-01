@@ -35,7 +35,7 @@ export function Contact() {
             <div>
               <h4 className="text-primary font-medium tracking-widest uppercase text-sm mb-3">Inquiries</h4>
               <p className="text-foreground/80 text-lg mb-1">+1 (555) 234-5678</p>
-              <p className="text-foreground/80 text-lg">reservations@wargo.com</p>
+              <p className="text-foreground/80 text-lg">reservations@palacehouse.co</p>
             </div>
           </div>
         </div>

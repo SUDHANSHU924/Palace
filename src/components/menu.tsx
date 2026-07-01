@@ -1,21 +1,13 @@
 import { useState } from "react";
-import { useGetMenu } from "../lib/api-client-react/generated/api";
-import { motion, AnimatePresence } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
+import { AnimatePresence, motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { getMenuSections, type MenuItem } from "@/lib/restaurant";
 
 export function Menu() {
-  const { data: menuData, isLoading, error } = useGetMenu();
-  const [activeCategory, setActiveCategory] = useState<string>("appetizers");
-  const [selectedItem, setSelectedItem] = useState<any>(null);
-
-  const fallbackImages: Record<string, string> = {
-    appetizers: "/images/menu-1.png",
-    mains: "/images/menu-2.png",
-    desserts: "/images/menu-3.png",
-    drinks: "/images/menu-4.png",
-  };
+  const menuSections = getMenuSections();
+  const [activeCategory, setActiveCategory] = useState(menuSections[0]?.category ?? "");
+  const [selectedItem, setSelectedItem] = useState<(MenuItem & { fallbackImage?: string }) | null>(null);
 
   return (
     <section id="menu" className="py-24 bg-card border-y border-border">
@@ -31,9 +23,9 @@ export function Menu() {
           </motion.h2>
           <div className="w-12 h-[1px] bg-primary mx-auto mb-12"></div>
 
-          {menuData?.sections?.length ? (
+          {menuSections.length ? (
             <div className="flex flex-wrap justify-center gap-4">
-              {menuData.sections.map((section) => (
+              {menuSections.map((section) => (
                 <button
                   key={section.category}
                   onClick={() => setActiveCategory(section.category)}
@@ -50,33 +42,10 @@ export function Menu() {
           ) : null}
         </div>
 
-        {isLoading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="flex gap-6 items-center p-4">
-                <Skeleton className="w-24 h-24 bg-muted" />
-                <div className="flex-1 space-y-3">
-                  <Skeleton className="h-6 w-1/2 bg-muted" />
-                  <Skeleton className="h-4 w-full bg-muted" />
-                  <Skeleton className="h-4 w-1/4 bg-muted" />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {error && (
-          <div className="text-center py-12 text-destructive">
-            <p>Failed to load the menu. Please try again later.</p>
-          </div>
-        )}
-
-        {menuData && (
+        {menuSections.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <AnimatePresence mode="popLayout">
-              {menuData.sections
-                .find((s) => s.category === activeCategory)
-                ?.items.map((item, i) => (
+              {menuSections.find((section) => section.category === activeCategory)?.items.map((item, i) => (
                   <motion.div
                     key={item.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -84,12 +53,12 @@ export function Menu() {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, delay: i * 0.1 }}
                     className="group cursor-pointer flex gap-6 items-start p-4 hover:bg-background transition-colors duration-300"
-                    onClick={() => setSelectedItem({ ...item, fallbackImage: fallbackImages[activeCategory] })}
+                    onClick={() => setSelectedItem({ ...item, fallbackImage: item.image })}
                   >
                     <div className="w-24 h-24 shrink-0 overflow-hidden relative">
                       <div className="absolute inset-0 bg-primary/20 mix-blend-multiply group-hover:bg-transparent transition-colors z-10" />
                       <img 
-                        src={item.image || fallbackImages[activeCategory] || "/images/menu-1.png"} 
+                        src={item.image || "/images/menu-1.png"} 
                         alt={item.name} 
                         className="w-full h-full object-cover"
                       />

@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useReserveTable, useGetAvailability, getGetAvailabilityQueryKey } from "../lib/api-client-react/generated/api";
-import { useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -16,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { getAvailability, reserveTable, type ReservationConfirmation, type TimeSlot } from "@/lib/restaurant";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -29,9 +28,10 @@ const formSchema = z.object({
 });
 
 export function Reservation() {
-  const [successData, setSuccessData] = useState<any>(null);
-  const queryClient = useQueryClient();
-  const reserveMutation = useReserveTable();
+  const [successData, setSuccessData] = useState<ReservationConfirmation | null>(null);
+  const [availability, setAvailability] = useState<TimeSlot[]>([]);
+  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,37 +40,70 @@ export function Reservation() {
       phone: "",
       email: "",
       guests: 2,
-      occasion: "",
+      occasion: "none",
       specialRequests: "",
+      time: "",
     },
   });
 
   const selectedDate = form.watch("date");
   const formattedDate = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
 
-  const { data: availability, isLoading: isAvailabilityLoading } = useGetAvailability(
-    { date: formattedDate },
-    { query: { enabled: !!formattedDate, queryKey: getGetAvailabilityQueryKey({ date: formattedDate }) } }
-  );
+  useEffect(() => {
+    let isActive = true;
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    reserveMutation.mutate(
-      {
-        data: {
-          ...values,
-          date: format(values.date, "yyyy-MM-dd"),
-        },
-      },
-      {
-        onSuccess: (data) => {
-          setSuccessData(data);
-          form.reset();
-          if (formattedDate) {
-            queryClient.invalidateQueries({ queryKey: getGetAvailabilityQueryKey({ date: formattedDate }) });
-          }
-        },
+    async function loadAvailability() {
+      if (!formattedDate) {
+        setAvailability([]);
+        return;
       }
-    );
+
+      setIsAvailabilityLoading(true);
+
+      try {
+        const slots = await getAvailability(formattedDate);
+        if (isActive) {
+          setAvailability(slots);
+        }
+      } finally {
+        if (isActive) {
+          setIsAvailabilityLoading(false);
+        }
+      }
+    }
+
+    void loadAvailability();
+
+    return () => {
+      isActive = false;
+    };
+  }, [formattedDate]);
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setSubmitError(null);
+
+    try {
+      const confirmation = await reserveTable({
+        ...values,
+        date: format(values.date, "yyyy-MM-dd"),
+        occasion: values.occasion && values.occasion !== "none" ? values.occasion : undefined,
+        specialRequests: values.specialRequests?.trim() ? values.specialRequests.trim() : undefined,
+      });
+
+      setSuccessData(confirmation);
+      form.reset({
+        name: "",
+        phone: "",
+        email: "",
+        guests: 2,
+        occasion: "none",
+        specialRequests: "",
+        time: "",
+      } as any);
+      setAvailability([]);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Unable to complete the reservation.");
+    }
   }
 
   return (
@@ -128,6 +161,12 @@ export function Reservation() {
               >
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    {submitError ? (
+                      <div className="border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                        {submitError}
+                      </div>
+                    ) : null}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <FormField
                         control={form.control}
@@ -275,7 +314,7 @@ export function Reservation() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="text-foreground/80 uppercase tracking-widest text-xs">Special Occasion (Optional)</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger className="bg-background border-border focus:ring-primary">
                                 <SelectValue placeholder="None" />
@@ -315,9 +354,9 @@ export function Reservation() {
                     <Button 
                       type="submit" 
                       className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-6 text-lg tracking-widest uppercase mt-4 rounded-none"
-                      disabled={reserveMutation.isPending}
+                      disabled={form.formState.isSubmitting}
                     >
-                      {reserveMutation.isPending ? "Confirming..." : "Reserve Table"}
+                      {form.formState.isSubmitting ? "Confirming..." : "Reserve Table"}
                     </Button>
                   </form>
                 </Form>

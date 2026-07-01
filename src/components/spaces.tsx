@@ -4,7 +4,7 @@ const spaces = [
   {
     title: "Main Dining Hall",
     capacity: "Capacity 80 • Private Events",
-    description: "The heart of WARGO. A grand, theatrical space bathed in amber light, designed for unforgettable evenings. Heavy velvet drapes and dark wood create an atmosphere of profound intimacy despite the scale.",
+    description: "The heart of Palace. A grand, theatrical space bathed in amber light, designed for unforgettable evenings. Heavy velvet drapes and dark wood create an atmosphere of profound intimacy despite the scale.",
     image: "/images/space-main.png"
   },
   {

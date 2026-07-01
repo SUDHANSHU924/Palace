@@ -6,7 +6,7 @@ const testimonials = [
     id: 1,
     name: "Eleanor Vance",
     rating: 5,
-    quote: "A transformative dining experience. The attention to detail is staggering. The amber light, the heavy silverware, the flawless service — WARGO isn't just a meal, it's an event."
+    quote: "A transformative dining experience. The attention to detail is staggering. The amber light, the heavy silverware, the flawless service — Palace isn't just a meal, it's an event."
   },
   {
     id: 2,

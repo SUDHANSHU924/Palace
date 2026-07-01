@@ -72,7 +72,7 @@ export function Gallery() {
                 </div>
                 <img 
                   src={item.src} 
-                  alt={`WARGO ${item.category}`} 
+                  alt={`Restaurant ${item.category}`} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </motion.div>

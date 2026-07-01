@@ -1,6 +1,6 @@
 # Palace
 
-Standalone React + Vite application for WARGO Industries.
+Palace is a standalone React + Vite site for an immersive dining brand.
 
 ## Scripts
 
@@ -9,4 +9,13 @@ pnpm install
 pnpm dev
 pnpm build
 pnpm preview
+pnpm check
 ```
+
+## Stack
+
+- React 19
+- Vite
+- Tailwind CSS v4
+- Radix UI primitives
+- Framer Motion

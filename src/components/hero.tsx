@@ -6,7 +6,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           src="/images/hero.png"
-          alt="WARGO luxury interior"
+          alt="Restaurant dining room interior"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background"></div>
@@ -19,7 +19,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="font-serif text-5xl md:text-7xl lg:text-8xl text-foreground mb-6"
         >
-          Welcome to <span className="text-primary">WARGO</span>
+          Welcome to <span className="text-primary">Restaurant</span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}

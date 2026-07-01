@@ -11,7 +11,7 @@ export function ChefStory() {
             viewport={{ once: true }}
             transition={{ duration: 1.5 }}
             src="/images/chef.png" 
-            alt="Executive Chef at WARGO" 
+            alt="Executive chef at Restaurant" 
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-background via-background/20 to-transparent md:w-1/2 md:right-0 md:left-auto"></div>
@@ -30,7 +30,7 @@ export function ChefStory() {
             
             <div className="space-y-6 text-foreground/70 text-lg leading-relaxed">
               <p>
-                "At WARGO, we believe that luxury is not about excess, but about extreme intention. Every ingredient is chosen for a reason. Every technique is applied with purpose."
+                "At Restaurant, we believe that luxury is not about excess, but about extreme intention. Every ingredient is chosen for a reason. Every technique is applied with purpose."
               </p>
               <p>
                 "The amber light, the heavy linens, the acoustics of the room — these are all ingredients in our recipe for a perfect evening. We aren't just feeding people; we are transporting them."
