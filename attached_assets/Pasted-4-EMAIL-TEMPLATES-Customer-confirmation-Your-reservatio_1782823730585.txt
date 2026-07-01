@@ -1,0 +1,81 @@
+4. EMAIL TEMPLATES:
+   - Customer confirmation: "Your reservation for [Date] [Time] is confirmed"
+     Include: Booking ID, restaurant details, contact info, cancellation link
+   - Restaurant manager alert: "[Name] booked [Date] [Time] [Guests] guests"
+
+═══════════════════════════════════════════════════════════════════
+
+VIDEO REQUIREMENTS:
+
+Video 1: Main walk-through (15-30 sec)
+- Shot: Entrance → Dining room → Kitchen → Bar
+- Style: Smooth tracking/gimbal shot, warm lighting
+- Audio: Soft background music (instrumental, jazz/lounge)
+- Resolution: 1080p minimum
+
+Video 2: Room showcase segments (10 sec each, 3 total)
+- Each room/section has its own short video
+- Content: Pan shots, ambient lighting, customer moments
+- Overlay text optional (room name fade-in)
+
+Video 3: Chef in kitchen (5 sec loop)
+- Montage of hands preparing food, plating, checking quality
+- Quick cuts, dynamic
+- No audio (or subtle kitchen ambiance)
+
+═══════════════════════════════════════════════════════════════════
+
+TECHNICAL STACK:
+
+FRONTEND:
+- React or Next.js (for state management, dynamic rendering)
+- Video playback: HTML5 <video> with plyr.io for custom controls
+- Menu filtering: React hooks (useState, useEffect)
+- Calendar: React-big-calendar or Flatpickr
+- Gallery: PhotoSwipe or Lightbox2
+- Animations: Framer Motion or CSS Keyframes
+- Icons: Tabler Icons
+
+BACKEND:
+- Node.js + Express OR Python Flask
+- Google Sheets API v4
+- Nodemailer for email notifications
+- Rate limiting: Express-rate-limit
+
+HOSTING:
+- Frontend: Vercel or Netlify
+- Backend: Render.com or Railway
+- Videos: Hosted on Cloudinary (free tier with 25GB/month)
+
+PERFORMANCE:
+- Image optimization: Lazy loading, WebP format
+- Video: Compressed MP4 (bitrate 1.5-2.5 Mbps)
+- Lighthouse: 85+ on desktop, 75+ on mobile
+
+═══════════════════════════════════════════════════════════════════
+
+MOBILE OPTIMIZATION:
+
+- Full-screen video on hero (fit to viewport)
+- Touch-friendly calendar date picker
+- Menu: Stacked cards on mobile (1 column)
+- Videos: Responsive <video> tag with poster image
+- Forms: Large inputs, mobile keyboard optimization
+- Sticky footer CTA: "Reserve Table Now" button (always visible)
+
+═══════════════════════════════════════════════════════════════════
+
+CONTENT CHECKLIST (Provide these):
+
+- Main walk-through video (15-30 sec)
+- 3x room showcase videos (10 sec each)
+- 20-30 high-quality photos
+- 4-5 customer testimonial videos (10-15 sec)
+- Chef photo + bio (150-200 words)
+- Menu items (minimum 15, with descriptions + prices)
+- Testimonial text (4-5, with names + photos)
+
+═══════════════════════════════════════════════════════════════════
+
+BUILD THIS WITH: Next.js + React + Google Sheets API + Cloudinary
+ESTIMATED BUILD TIME: 50-70 hours

@@ -1,0 +1,62 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "2c4fvven6-v61RusJdu_8"
+uri = "file://artifacts/wargo/public/images/hero.png"
+type = "image"
+title = "Luxurious restaurant interior hero"
+
+[[generated]]
+id = "Xa2HNE2e4E-coURw0x99O"
+uri = "file://artifacts/wargo/public/images/space-main.png"
+type = "image"
+title = "Main dining hall"
+
+[[generated]]
+id = "AxhS7GPRRZKD-nqJNdU_L"
+uri = "file://artifacts/wargo/public/images/space-private.png"
+type = "image"
+title = "Private dining room"
+
+[[generated]]
+id = "WezkgGD9Ux26Qte_pM911"
+uri = "file://artifacts/wargo/public/images/space-terrace.png"
+type = "image"
+title = "Outdoor garden terrace"
+
+[[generated]]
+id = "tJ_ceFbqAVKwScx25AiEe"
+uri = "file://artifacts/wargo/public/images/chef.png"
+type = "image"
+title = "Executive chef portrait"
+
+[[generated]]
+id = "6XQo-CGoFtGyWjqGEcxeQ"
+uri = "file://artifacts/wargo/public/images/menu-1.png"
+type = "image"
+title = "Signature dish 1"
+
+[[generated]]
+id = "SkQ4D5msuXjlj1w9ishDP"
+uri = "file://artifacts/wargo/public/images/menu-2.png"
+type = "image"
+title = "Signature dish 2"
+
+[[generated]]
+id = "mNH46e7czAl27u7SpuWCk"
+uri = "file://artifacts/wargo/public/images/menu-3.png"
+type = "image"
+title = "Signature dessert"
+
+[[generated]]
+id = "ZmdI5DCyFAX4mca26n5pr"
+uri = "file://artifacts/wargo/public/images/menu-4.png"
+type = "image"
+title = "Signature cocktail"
+
+[[generated]]
+id = "2TrkXPczOmBJJA4bQQhFJ"
+uri = "file://artifacts/wargo/public/images/gallery-1.png"
+type = "image"
+title = "Ambiance detail"
